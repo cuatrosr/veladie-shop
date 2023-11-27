@@ -27,6 +27,9 @@ export class User {
   email: string;
 
   @Prop({ required: true })
+  username: string;
+
+  @Prop({ required: true })
   phone: string;
 
   @Exclude()
@@ -39,7 +42,7 @@ export class User {
   @Prop({ type: String, enum: Gender })
   gender: Gender;
 
-  @Prop({ require: true })
+  @Prop({ require: true, type: mongoose.Schema.Types.Date })
   birthDay: Date;
 
   @Prop({ default: true })

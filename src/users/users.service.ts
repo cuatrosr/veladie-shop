@@ -1,27 +1,28 @@
-import { Role } from '../utils/enums/role.enum';
+import { User, UserDocument } from './schema/user.schema';
+import { RegisterDTO } from 'src/auth/dto/register.dto';
+import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
-
-// This should be a real class/interface representing a user entity
-export type User = any;
+import { Model } from 'mongoose';
+import {
+  HttpMongoError,
+  HttpNotFound,
+} from 'src/utils/exceptions/http.exception';
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-      roles: [Role.User],
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-      roles: [Role.Admin],
-    },
-  ];
+  constructor(
+    @InjectModel(User.name)
+    private readonly userModel: Model<UserDocument>,
+  ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async create(user: RegisterDTO) {
+    return this.userModel.create(user).catch(() => HttpMongoError(User.name));
+  }
+
+  async findByUsername(username: string) {
+    return (
+      (await this.userModel.findOne({ username: username })) ||
+      HttpNotFound(User.name)
+    );
   }
 }
