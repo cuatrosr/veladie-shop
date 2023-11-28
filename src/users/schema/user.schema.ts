@@ -2,7 +2,7 @@ import mongoose, { Types, HydratedDocument, ObjectId } from 'mongoose';
 import { Favorite } from '../../favorites/schema/favorite.schema';
 import { Address } from '../../addresses/schema/address.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude, Transform } from 'class-transformer';
+import { Exclude, Transform, Type } from 'class-transformer';
 import { Gender } from '../../utils/enums/gender.enum';
 import { Cart } from '../../carts/schema/cart.schema';
 import { Role } from '../../utils/enums/role.enum';
@@ -13,6 +13,7 @@ export type UserDocument = HydratedDocument<User>;
   timestamps: { createdAt: 'created', updatedAt: 'updated' },
 })
 export class User {
+  @Type(() => String)
   @Transform(({ value }) => value.toString())
   _id: Types.ObjectId;
 
@@ -50,15 +51,13 @@ export class User {
   @Prop({ require: true, type: mongoose.Schema.Types.Date })
   birthDay: Date;
 
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Favorite.name }],
-  })
+  @Type(() => String)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Favorite.name })
   @Transform(({ value }) => value.toString())
   favorites: Favorite;
 
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Cart.name }],
-  })
+  @Type(() => String)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Cart.name })
   @Transform(({ value }) => value.toString())
   cart: Cart;
 

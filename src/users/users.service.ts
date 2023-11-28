@@ -27,10 +27,21 @@ export class UsersService {
       .catch(() => HttpMongoError(User.name));
   }
 
+  async findById(id: string) {
+    return (
+      (await this.userModel
+        .findById(id)
+        .exec()
+        .catch(() => HttpMongoError(User.name))) || HttpNotFound(User.name)
+    );
+  }
+
   async findByUsername(username: string) {
     return (
-      (await this.userModel.findOne({ username: username }).exec()) ||
-      HttpNotFound(User.name)
+      (await this.userModel
+        .findOne({ username: username })
+        .exec()
+        .catch(() => HttpMongoError(User.name))) || HttpNotFound(User.name)
     );
   }
 }
