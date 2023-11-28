@@ -1,9 +1,9 @@
 import { UserDecorator } from '../utils/decorators/user.decorator';
 import { JwtAuthGuard } from '../utils/guards/jwt/jwt-auth.guard';
 import { RolesGuard } from '../utils/guards/role/roles.guard';
-import { Roles } from 'src/utils/decorators/roles.decorator';
+import { Roles } from '../utils/decorators/roles.decorator';
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { Role } from 'src/utils/enums/role.enum';
+import { Role } from '../utils/enums/role.enum';
 import { UsersService } from './users.service';
 import { ApiTags } from '@nestjs/swagger';
 
