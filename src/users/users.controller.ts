@@ -1,11 +1,6 @@
-import MongooseClassSerializerInterceptor from 'src/utils/interceptors/mongooseClassSerializer.interceptor';
-import {
-  Controller,
-  Get,
-  Param,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import MongooseClassSerializerInterceptor from '../utils/interceptors/mongooseClassSerializer.interceptor';
+import { Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
+import { UserDecorator } from '../utils/decorators/user.decorator';
 import { JwtAuthGuard } from '../utils/guards/jwt/jwt-auth.guard';
 import { RolesGuard } from '../utils/guards/role/roles.guard';
 import { Roles } from '../utils/decorators/roles.decorator';
@@ -20,10 +15,10 @@ import { ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get(':id')
+  @Get()
   @Roles(Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  findById(@Param('id') id: string) {
-    return this.usersService.findById(id);
+  async getProfile(@UserDecorator() user: any) {
+    return this.usersService.findById(user.sub);
   }
 }

@@ -25,6 +25,8 @@ export class AuthService {
       username: user.username,
       sub: user._id.toString(),
       roles: user.role,
+      cart: user.cart,
+      favorites: user.favorites,
     };
     return {
       access_token: await this.jwtService.signAsync(payload),
