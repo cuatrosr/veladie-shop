@@ -1,5 +1,14 @@
-import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Gender } from '../../utils/enums/gender.enum';
+import { Role } from '../../utils/enums/role.enum';
 
 export class RegisterDTO {
   @IsString()
@@ -26,7 +35,19 @@ export class RegisterDTO {
   @IsNotEmpty()
   gender: Gender;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   birthDay: Date;
+
+  @IsString()
+  @IsOptional()
+  role: Role;
+
+  @IsMongoId()
+  @IsOptional()
+  favorites: string;
+
+  @IsMongoId()
+  @IsOptional()
+  cart: string;
 }

@@ -1,5 +1,4 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as mongooseAutoPopulate from 'mongoose-autopopulate';
 import configuration from './config/configuration';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -16,10 +15,6 @@ import { Module } from '@nestjs/common';
         uri: `${config.get('database.host')}:${config.get(
           'database.port',
         )}/${config.get('database.name')}`,
-        connectionFactory: (connection) => {
-          connection.plugin(mongooseAutoPopulate);
-          return connection;
-        },
       }),
     }),
     AuthModule,

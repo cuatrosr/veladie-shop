@@ -3,21 +3,19 @@ import { User } from '../users/schema/user.schema';
 import { RegisterDTO } from './dto/register.dto';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
+  async validateUser(username: string, password: string): Promise<User | null> {
     const user = await this.usersService.findByUsername(username);
-    if (user && user.password === pass) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user;
-      return result;
+    if (user && (await compare(password, user.password))) {
+      return user;
     }
     return null;
   }
@@ -25,7 +23,7 @@ export class AuthService {
   async login(user: User) {
     const payload = {
       username: user.username,
-      sub: user._id,
+      sub: user._id.toString(),
       roles: user.role,
     };
     return {

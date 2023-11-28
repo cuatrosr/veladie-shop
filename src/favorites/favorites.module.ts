@@ -15,4 +15,4 @@ import { Module } from '@nestjs/common';
   providers: [FavoritesService],
   exports: [FavoritesService],
 })
-export class ProductsModule {}
+export class FavoritesModule {}

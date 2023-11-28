@@ -1,6 +1,6 @@
+import mongoose, { HydratedDocument, ObjectId, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Product } from '../../products/schema/product.schema';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Transform } from 'class-transformer';
 
 export type FavoriteDocument = HydratedDocument<Favorite>;
@@ -13,9 +13,11 @@ export class Favorite {
   _id: Types.ObjectId;
 
   @Prop({
-    required: true,
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Product.name }],
   })
+  @Transform(({ value }) =>
+    value.map((objectId: ObjectId) => objectId.toString()),
+  )
   products: Product[];
 }
 
