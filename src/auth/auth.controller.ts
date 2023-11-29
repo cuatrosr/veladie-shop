@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBody,
+  ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -44,7 +45,7 @@ export class AuthController {
   @Post('register')
   @HttpCode(201)
   @ApiBody({ type: [RegisterDTO] })
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     description: 'User Registered',
   })
   @Public()
