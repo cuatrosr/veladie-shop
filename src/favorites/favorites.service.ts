@@ -27,7 +27,7 @@ export class FavoritesService {
         .findById(id)
         .populate([
           {
-            path: 'products.id',
+            path: 'products',
             select: 'name description price ammount',
           },
         ])

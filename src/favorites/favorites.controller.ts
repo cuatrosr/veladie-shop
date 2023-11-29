@@ -32,7 +32,7 @@ export class FavoritesController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async getFavorites(@UserDecorator() user: any) {
     return this.favoritesService.findById(user.favorites);
@@ -46,7 +46,7 @@ export class FavoritesController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async addProduct(
     @UserDecorator() user: any,

@@ -32,7 +32,7 @@ export class CartsController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async getCart(@UserDecorator() user: any) {
     return this.cartsService.findById(user.cart);
@@ -46,7 +46,7 @@ export class CartsController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async addProduct(@UserDecorator() user: any, @Body() cartsDTO: CartsDTO) {
     return this.cartsService.addProduct(user.cart, cartsDTO);

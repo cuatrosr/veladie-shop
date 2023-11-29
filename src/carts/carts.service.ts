@@ -27,7 +27,7 @@ export class CartsService {
         .findById(id)
         .populate([
           {
-            path: 'products.id',
+            path: 'products',
             select: 'name description price ammount',
           },
         ])

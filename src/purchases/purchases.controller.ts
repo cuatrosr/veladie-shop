@@ -33,7 +33,7 @@ export class PurchasesController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async create(@UserDecorator() user: any, @Body() purchasesDTO: PurchasesDTO) {
     return this.purchasesService.create(user.sub, purchasesDTO);
@@ -47,7 +47,7 @@ export class PurchasesController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async findAllByUser(@UserDecorator() user: any) {
     return this.purchasesService.findAllByUser(user.sub);

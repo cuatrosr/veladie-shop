@@ -25,7 +25,7 @@ export class AddressController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async addAddress(@UserDecorator() user: any, @Body() addressDTO: AddressDTO) {
     return this.addressService.create(user.sub, addressDTO);

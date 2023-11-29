@@ -23,24 +23,27 @@ export class ProductsService {
       .find()
       .populate([
         {
-          path: 'categories.id',
+          path: 'categories',
           select: 'name',
         },
       ])
       .populate([
         {
-          path: 'colors.id',
+          path: 'colors',
           select: 'name html',
         },
       ])
       .populate([
         {
-          path: 'collections.id',
+          path: 'collections',
           select: 'name',
         },
       ])
       .exec()
-      .catch(() => HttpMongoError(Product.name));
+      .catch((e) => {
+        console.log(e);
+        HttpMongoError(Product.name);
+      });
   }
 
   async addColor(product: string, color: string) {

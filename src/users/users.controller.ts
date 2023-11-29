@@ -33,7 +33,7 @@ export class UsersController {
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
-  @Roles(Role.User)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   async getProfile(@UserDecorator() user: any) {
     return this.usersService.findById(user.sub);
