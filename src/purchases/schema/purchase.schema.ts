@@ -15,8 +15,7 @@ export class Purchase {
   _id: Types.ObjectId;
 
   @Prop({
-    required: true,
-    type: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   })
   user: User;
 

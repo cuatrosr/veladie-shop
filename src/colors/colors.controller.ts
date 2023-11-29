@@ -15,36 +15,36 @@ import { JwtAuthGuard } from '../utils/guards/jwt/jwt-auth.guard';
 import { Public } from 'src/utils/decorators/public.decorator';
 import { RolesGuard } from '../utils/guards/role/roles.guard';
 import { Roles } from '../utils/decorators/roles.decorator';
-import { CategoriesDTO } from './dto/categories.dto';
+import { ColorsService } from './colors.service';
 import { Role } from '../utils/enums/role.enum';
-import { CategoriesService } from './categories.service';
+import { ColorsDTO } from './dto/colors.dto';
 
-@ApiTags('Categories')
-@Controller('categories')
-export class CategoriesController {
-  constructor(private categoriesService: CategoriesService) {}
+@ApiTags('Colors')
+@Controller('colors')
+export class ColorsController {
+  constructor(private colorsService: ColorsService) {}
 
   @Post()
   @HttpCode(200)
   @ApiOkResponse({
-    description: "Product's category added",
+    description: "Product's color added",
   })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
   })
   @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  async create(@Body() categoriesDTO: CategoriesDTO) {
-    return this.categoriesService.create(categoriesDTO);
+  async create(@Body() colorsDTO: ColorsDTO) {
+    return this.colorsService.create(colorsDTO);
   }
 
   @Get()
   @HttpCode(200)
   @ApiOkResponse({
-    description: 'Get all categories',
+    description: 'Get all colors',
   })
   @Public()
   async findAll() {
-    return this.categoriesService.findAll();
+    return this.colorsService.findAll();
   }
 }
