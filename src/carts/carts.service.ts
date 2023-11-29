@@ -5,6 +5,7 @@ import {
 import { Cart, CartDocument } from './schema/cart.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
+import { CartsDTO } from './dto/carts.dto';
 import { Model } from 'mongoose';
 
 @Injectable()
@@ -33,5 +34,16 @@ export class CartsService {
         .exec()
         .catch(() => HttpMongoError(Cart.name))) || HttpNotFound(Cart.name)
     );
+  }
+
+  async addProduct(cart: string, cartsDTO: CartsDTO) {
+    return await this.cartModel
+      .updateOne(
+        { _id: cart },
+        { $addToSet: { products: cartsDTO.product } },
+        { new: true },
+      )
+      .exec()
+      .catch(() => HttpMongoError(Cart.name));
   }
 }

@@ -44,4 +44,15 @@ export class UsersService {
         .catch(() => HttpMongoError(User.name))) || HttpNotFound(User.name)
     );
   }
+
+  async addAddress(user: string, address: string) {
+    return await this.userModel
+      .updateOne(
+        { _id: user },
+        { $addToSet: { addresses: address } },
+        { new: true },
+      )
+      .exec()
+      .catch(() => HttpMongoError(User.name));
+  }
 }
