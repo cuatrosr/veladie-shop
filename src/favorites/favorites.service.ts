@@ -39,11 +39,17 @@ export class FavoritesService {
 
   async addProduct(favorite: string, favoritesDTO: FavoritesDTO) {
     return await this.favoriteModel
-      .updateOne(
+      .findOneAndUpdate(
         { _id: favorite },
         { $addToSet: { products: favoritesDTO.product } },
         { new: true },
       )
+      .populate([
+        {
+          path: 'products',
+          select: 'name description price ammount',
+        },
+      ])
       .exec()
       .catch(() => HttpMongoError(Favorite.name));
   }

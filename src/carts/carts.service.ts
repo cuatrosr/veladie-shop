@@ -38,11 +38,17 @@ export class CartsService {
 
   async addProduct(cart: string, cartsDTO: CartsDTO) {
     return await this.cartModel
-      .updateOne(
+      .findByIdAndUpdate(
         { _id: cart },
         { $addToSet: { products: cartsDTO.product } },
         { new: true },
       )
+      .populate([
+        {
+          path: 'products',
+          select: 'name description price ammount',
+        },
+      ])
       .exec()
       .catch(() => HttpMongoError(Cart.name));
   }
