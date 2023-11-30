@@ -18,12 +18,9 @@ import { ProductsModule } from './products/products.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
-        /*
         uri: `${config.get('database.host')}:${config.get(
           'database.port',
         )}/${config.get('database.name')}`,
-        */
-        uri: `${config.get('database.host')}`,
       }),
     }),
     AuthModule,

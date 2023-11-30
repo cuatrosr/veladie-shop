@@ -5,9 +5,7 @@ export default () => ({
     expires: process.env.JWT_EXPIRES || '9999 years',
   },
   database: {
-    host:
-      process.env.DATABASE_HOST ||
-      'mongodb+srv://devops:mongopw@cluster0.qukc7qc.mongodb.net/test?retryWrites=true&w=majority',
+    host: process.env.DATABASE_HOST || '127.0.0.1',
     port: parseInt(process.env.DATABASE_PORT || '27017', 10),
     name: process.env.DATABASE_NAME || 'veladie',
   },
